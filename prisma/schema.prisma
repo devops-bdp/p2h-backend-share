@@ -1,0 +1,158 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  USER
+}
+
+enum SupportVehicleCategory {
+  TELEHENDLER
+  STORING_TRUCK
+  AMBULANCE
+  MOBILE_CRANE
+  CRANE_TRUCK
+  LIGHT_VECHICLE
+  FUEL_TRUCK
+  COMPRESSOR
+  COMPACTOR
+  DOZER
+  EXCAVATOR
+  GENSET
+}
+
+enum Posision {
+  SITE_MANAGER
+  SITE_SUPERVISOR
+  SITE_SUPERINTENDENT
+  OPERATOR
+  MECHANIC
+  ELECTRICIAN
+  TYREMAN
+  DRIVER
+  ADMIN
+}
+
+enum Department {
+  OPERATIONS
+  PRODUCTION_AND_ENGINEERING
+  PLANT
+  LOGISTIC
+  HSE
+  HRGA
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
+enum Shift {
+  PAGI
+  SIANG
+  MALAM
+}
+
+enum P2HUnitStatus {
+  LAYAK
+  TIDAK_LAYAK
+  SIAP
+  TIDAK_SIAP
+}
+
+enum P2HDriverStatus {
+  LAYAK
+  TIDAK_LAYAK
+  SIAP
+  TIDAK_SIAP
+}
+
+model User {
+  id             Int             @id @default(autoincrement())
+  firstName      String
+  lastName       String
+  nrp            Int
+  password       String
+  department     Department      @default(HRGA)
+  posision       Posision        @default(ADMIN)
+  phoneNumber    String?
+  email          String?
+  role           Role            @default(USER)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  p2hInspections P2HInspection[]
+}
+
+model Unit {
+  id             Int                    @id @default(autoincrement())
+  unitNo         String                 @unique
+  category       SupportVehicleCategory
+  brand          String
+  description    String
+  ownerName      String
+  km             Int
+  hourMeter      Int?
+  status         Status                 @default(ACTIVE)
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  p2hInspections P2HInspection[]
+}
+
+model P2HInspection {
+  id         Int      @id @default(autoincrement())
+  p2hNo      String   @unique
+  unitId     Int
+  unit       Unit     @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  driverName String?
+  driverNrp  Int?
+  nopol      String?
+  section    String?
+  workSystem Json? // Array of string e.g. ["Tambang", "Jalur Hauling"]
+  shift      Shift    @default(PAGI)
+  date       DateTime @default(now())
+  km         Int
+  hourMeter  Int?
+
+  // Section 1: Item Kerusakan / Pemeriksaan Fisik & Mesin (20 Items: Lampu Bahaya, Sen, Kabin, dll)
+  // Format: [{ item: string, condition: "BAIK" | "MINOR" | "MAJOR", note?: string }]
+  damageChecks Json
+
+  // Section 2: Tyre Check (Kondisi, Tekanan, Posisi, Keterangan)
+  // Format: { condition: string, pressure: string, problemPositions: string[], notes?: string }
+  tyreCheck Json
+
+  // Section 3: Safety Tools K3 (6 Items: Segitiga Pengaman, APAR, Dongkrak, Radio, P3K, Strobe Light)
+  // Format: [{ item: string, status: "ADA" | "TIDAK_ADA" }]
+  safetyTools Json
+
+  // Section 4: Fit To Work + PSM (10 Pertanyaan: Mengantuk?, Cukup Tidur?, Minum Obat?, dll)
+  // Format: [{ question: string, answer: "YA" | "TIDAK" }]
+  fitToWork Json
+
+  // Section 5: Warning / Tidak Layak (Jika ada kendala)
+  // Format: { problemType?: string, actionTaken?: string, additionalNotes?: string }
+  warningDetails Json?
+
+  // Section 6: Validasi Driver
+  driverValidation Boolean @default(true)
+
+  // Section 7: Kesimpulan
+  unitStatus      P2HUnitStatus
+  driverStatus    P2HDriverStatus
+  supervisorNotes String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
