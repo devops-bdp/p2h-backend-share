@@ -214,6 +214,26 @@ export async function createPublicP2HInspection(req: Request, res: Response) {
       });
     }
 
+    // Validasi Angka KM tidak boleh lebih rendah dari KM unit saat ini
+    if (km !== undefined && km !== null && km !== "" && existingUnit.km != null && existingUnit.km > 0) {
+      if (Number(km) < existingUnit.km) {
+        return res.status(400).json({
+          success: false,
+          message: `Angka KM (${km}) tidak boleh lebih rendah dari KM unit saat ini (${existingUnit.km} KM).`,
+        });
+      }
+    }
+
+    // Validasi Angka HM tidak boleh lebih rendah dari HM unit saat ini
+    if (hourMeter !== undefined && hourMeter !== null && hourMeter !== "" && existingUnit.hourMeter != null && existingUnit.hourMeter > 0) {
+      if (Number(hourMeter) < existingUnit.hourMeter) {
+        return res.status(400).json({
+          success: false,
+          message: `Angka Hour Meter / HM (${hourMeter}) tidak boleh lebih rendah dari HM unit saat ini (${existingUnit.hourMeter} HM).`,
+        });
+      }
+    }
+
     // Cari User pengait inspeksi (dari driverId atau driverNrp atau user pertama)
     let matchedUserId: number | null = null;
     if (driverId) {
@@ -245,7 +265,7 @@ export async function createPublicP2HInspection(req: Request, res: Response) {
         workSystem: workSystem || ['Tambang'],
         shift,
         km: Number(km || existingUnit.km || 0),
-        hourMeter: hourMeter !== undefined && hourMeter !== null ? Number(hourMeter) : existingUnit.hourMeter,
+        hourMeter: hourMeter !== undefined && hourMeter !== null && hourMeter !== "" ? Number(hourMeter) : existingUnit.hourMeter,
         damageChecks: damageChecks || [],
         tyreCheck: tyreCheck || {
           condition: 'BAIK',
@@ -266,17 +286,18 @@ export async function createPublicP2HInspection(req: Request, res: Response) {
       },
     });
 
-    // Update KM unit jika lebih tinggi
-    if (km && Number(km) > existingUnit.km) {
-      await prisma.unit.update({
-        where: { id: Number(unitId) },
-        data: {
-          km: Number(km),
-          hourMeter: hourMeter ? Number(hourMeter) : existingUnit.hourMeter,
-          status: (unitStatus === 'TIDAK_LAYAK' || unitStatus === 'TIDAK_SIAP') ? 'INACTIVE' : 'ACTIVE',
-        },
-      });
-    }
+    // Update data KM, HM, dan status operasional Unit
+    const updatedKm = (km !== undefined && km !== null && km !== "") ? Math.max(Number(km), existingUnit.km || 0) : existingUnit.km;
+    const updatedHm = (hourMeter !== undefined && hourMeter !== null && hourMeter !== "") ? Math.max(Number(hourMeter), existingUnit.hourMeter || 0) : existingUnit.hourMeter;
+
+    await prisma.unit.update({
+      where: { id: Number(unitId) },
+      data: {
+        km: updatedKm,
+        hourMeter: updatedHm,
+        status: (unitStatus === 'TIDAK_LAYAK' || unitStatus === 'TIDAK_SIAP') ? 'INACTIVE' : 'ACTIVE',
+      },
+    });
 
     return res.status(201).json({
       success: true,
@@ -528,6 +549,26 @@ export async function createP2HInspection(req: AuthRequest, res: Response) {
       });
     }
 
+    // Validasi Angka KM tidak boleh lebih rendah dari KM unit saat ini
+    if (km !== undefined && km !== null && km !== "" && existingUnit.km != null && existingUnit.km > 0) {
+      if (Number(km) < existingUnit.km) {
+        return res.status(400).json({
+          success: false,
+          message: `Angka KM (${km}) tidak boleh lebih rendah dari KM unit saat ini (${existingUnit.km} KM).`,
+        });
+      }
+    }
+
+    // Validasi Angka HM tidak boleh lebih rendah dari HM unit saat ini
+    if (hourMeter !== undefined && hourMeter !== null && hourMeter !== "" && existingUnit.hourMeter != null && existingUnit.hourMeter > 0) {
+      if (Number(hourMeter) < existingUnit.hourMeter) {
+        return res.status(400).json({
+          success: false,
+          message: `Angka Hour Meter / HM (${hourMeter}) tidak boleh lebih rendah dari HM unit saat ini (${existingUnit.hourMeter} HM).`,
+        });
+      }
+    }
+
     const p2hNo = generateP2HNo(existingUnit.category);
 
     const newInspection = await prisma.p2HInspection.create({
@@ -542,7 +583,7 @@ export async function createP2HInspection(req: AuthRequest, res: Response) {
         workSystem: workSystem || ['Tambang'],
         shift,
         km: Number(km || existingUnit.km || 0),
-        hourMeter: hourMeter !== undefined && hourMeter !== null ? Number(hourMeter) : existingUnit.hourMeter,
+        hourMeter: hourMeter !== undefined && hourMeter !== null && hourMeter !== "" ? Number(hourMeter) : existingUnit.hourMeter,
         damageChecks: damageChecks || [],
         tyreCheck: tyreCheck || {
           condition: 'BAIK',
@@ -574,16 +615,18 @@ export async function createP2HInspection(req: AuthRequest, res: Response) {
       },
     });
 
-    if (km && Number(km) > existingUnit.km) {
-      await prisma.unit.update({
-        where: { id: Number(unitId) },
-        data: {
-          km: Number(km),
-          hourMeter: hourMeter ? Number(hourMeter) : existingUnit.hourMeter,
-          status: (unitStatus === 'TIDAK_LAYAK' || unitStatus === 'TIDAK_SIAP') ? 'INACTIVE' : 'ACTIVE',
-        },
-      });
-    }
+    // Update data KM, HM, dan status operasional Unit
+    const updatedKm = (km !== undefined && km !== null && km !== "") ? Math.max(Number(km), existingUnit.km || 0) : existingUnit.km;
+    const updatedHm = (hourMeter !== undefined && hourMeter !== null && hourMeter !== "") ? Math.max(Number(hourMeter), existingUnit.hourMeter || 0) : existingUnit.hourMeter;
+
+    await prisma.unit.update({
+      where: { id: Number(unitId) },
+      data: {
+        km: updatedKm,
+        hourMeter: updatedHm,
+        status: (unitStatus === 'TIDAK_LAYAK' || unitStatus === 'TIDAK_SIAP') ? 'INACTIVE' : 'ACTIVE',
+      },
+    });
 
     return res.status(201).json({
       success: true,
