@@ -23,7 +23,8 @@ export const SupportVehicleCategory = {
     COMPRESSOR: 'COMPRESSOR',
     COMPACTOR: 'COMPACTOR',
     DOZER: 'DOZER',
-    EXCAVATOR: 'EXCAVATOR'
+    EXCAVATOR: 'EXCAVATOR',
+    GENSET: 'GENSET'
 };
 export const Posision = {
     SITE_MANAGER: 'SITE_MANAGER',
@@ -47,5 +48,22 @@ export const Department = {
 export const Status = {
     ACTIVE: 'ACTIVE',
     INACTIVE: 'INACTIVE'
+};
+export const Shift = {
+    PAGI: 'PAGI',
+    SIANG: 'SIANG',
+    MALAM: 'MALAM'
+};
+export const P2HUnitStatus = {
+    LAYAK: 'LAYAK',
+    TIDAK_LAYAK: 'TIDAK_LAYAK',
+    SIAP: 'SIAP',
+    TIDAK_SIAP: 'TIDAK_SIAP'
+};
+export const P2HDriverStatus = {
+    LAYAK: 'LAYAK',
+    TIDAK_LAYAK: 'TIDAK_LAYAK',
+    SIAP: 'SIAP',
+    TIDAK_SIAP: 'TIDAK_SIAP'
 };
 //# sourceMappingURL=enums.js.map

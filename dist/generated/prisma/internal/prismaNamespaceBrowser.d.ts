@@ -28,6 +28,7 @@ export declare const AnyNull: import("@prisma/client-runtime-utils").AnyNullClas
 export declare const ModelName: {
     readonly User: 'User';
     readonly Unit: 'Unit';
+    readonly P2HInspection: 'P2HInspection';
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export declare const TransactionIsolationLevel: {
@@ -66,11 +67,47 @@ export declare const UnitScalarFieldEnum: {
     readonly updatedAt: 'updatedAt';
 };
 export type UnitScalarFieldEnum = (typeof UnitScalarFieldEnum)[keyof typeof UnitScalarFieldEnum];
+export declare const P2HInspectionScalarFieldEnum: {
+    readonly id: 'id';
+    readonly p2hNo: 'p2hNo';
+    readonly unitId: 'unitId';
+    readonly userId: 'userId';
+    readonly driverName: 'driverName';
+    readonly driverNrp: 'driverNrp';
+    readonly nopol: 'nopol';
+    readonly section: 'section';
+    readonly workSystem: 'workSystem';
+    readonly shift: 'shift';
+    readonly date: 'date';
+    readonly km: 'km';
+    readonly hourMeter: 'hourMeter';
+    readonly damageChecks: 'damageChecks';
+    readonly tyreCheck: 'tyreCheck';
+    readonly safetyTools: 'safetyTools';
+    readonly fitToWork: 'fitToWork';
+    readonly warningDetails: 'warningDetails';
+    readonly driverValidation: 'driverValidation';
+    readonly unitStatus: 'unitStatus';
+    readonly driverStatus: 'driverStatus';
+    readonly supervisorNotes: 'supervisorNotes';
+    readonly createdAt: 'createdAt';
+    readonly updatedAt: 'updatedAt';
+};
+export type P2HInspectionScalarFieldEnum = (typeof P2HInspectionScalarFieldEnum)[keyof typeof P2HInspectionScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: 'asc';
     readonly desc: 'desc';
 };
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
+export declare const NullableJsonNullValueInput: {
+    readonly DbNull: import("@prisma/client-runtime-utils").DbNullClass;
+    readonly JsonNull: import("@prisma/client-runtime-utils").JsonNullClass;
+};
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
+export declare const JsonNullValueInput: {
+    readonly JsonNull: import("@prisma/client-runtime-utils").JsonNullClass;
+};
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput];
 export declare const QueryMode: {
     readonly default: 'default';
     readonly insensitive: 'insensitive';
@@ -81,4 +118,10 @@ export declare const NullsOrder: {
     readonly last: 'last';
 };
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder];
+export declare const JsonNullValueFilter: {
+    readonly DbNull: import("@prisma/client-runtime-utils").DbNullClass;
+    readonly JsonNull: import("@prisma/client-runtime-utils").JsonNullClass;
+    readonly AnyNull: import("@prisma/client-runtime-utils").AnyNullClass;
+};
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter];
 //# sourceMappingURL=prismaNamespaceBrowser.d.ts.map

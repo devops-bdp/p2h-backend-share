@@ -133,10 +133,50 @@ export default function AuthController() {
             });
         }
     }
+    /**
+     * Mengambil daftar User yang bertindak sebagai Driver/Operator
+     * Kecuali yang memiliki posisi SITE_MANAGER
+     */
+    async function getDrivers(req, res) {
+        try {
+            const drivers = await prisma.user.findMany({
+                where: {
+                    NOT: {
+                        posision: 'SITE_MANAGER',
+                    },
+                },
+                select: {
+                    id: true,
+                    firstName: true,
+                    lastName: true,
+                    nrp: true,
+                    department: true,
+                    posision: true,
+                    role: true,
+                    phoneNumber: true,
+                },
+                orderBy: {
+                    firstName: 'asc',
+                },
+            });
+            return res.json({
+                success: true,
+                count: drivers.length,
+                data: drivers,
+            });
+        }
+        catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: error.message || 'Gagal mengambil data driver/operator',
+            });
+        }
+    }
     return {
         login,
         register,
         getMe,
+        getDrivers,
     };
 }
 //# sourceMappingURL=auth.controller.js.map

@@ -16,6 +16,7 @@ export declare const SupportVehicleCategory: {
     readonly COMPACTOR: 'COMPACTOR';
     readonly DOZER: 'DOZER';
     readonly EXCAVATOR: 'EXCAVATOR';
+    readonly GENSET: 'GENSET';
 };
 export type SupportVehicleCategory = (typeof SupportVehicleCategory)[keyof typeof SupportVehicleCategory];
 export declare const Posision: {
@@ -44,4 +45,24 @@ export declare const Status: {
     readonly INACTIVE: 'INACTIVE';
 };
 export type Status = (typeof Status)[keyof typeof Status];
+export declare const Shift: {
+    readonly PAGI: 'PAGI';
+    readonly SIANG: 'SIANG';
+    readonly MALAM: 'MALAM';
+};
+export type Shift = (typeof Shift)[keyof typeof Shift];
+export declare const P2HUnitStatus: {
+    readonly LAYAK: 'LAYAK';
+    readonly TIDAK_LAYAK: 'TIDAK_LAYAK';
+    readonly SIAP: 'SIAP';
+    readonly TIDAK_SIAP: 'TIDAK_SIAP';
+};
+export type P2HUnitStatus = (typeof P2HUnitStatus)[keyof typeof P2HUnitStatus];
+export declare const P2HDriverStatus: {
+    readonly LAYAK: 'LAYAK';
+    readonly TIDAK_LAYAK: 'TIDAK_LAYAK';
+    readonly SIAP: 'SIAP';
+    readonly TIDAK_SIAP: 'TIDAK_SIAP';
+};
+export type P2HDriverStatus = (typeof P2HDriverStatus)[keyof typeof P2HDriverStatus];
 //# sourceMappingURL=enums.d.ts.map

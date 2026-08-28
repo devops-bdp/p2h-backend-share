@@ -12,4 +12,9 @@ export type User = Prisma.UserModel;
  *
  */
 export type Unit = Prisma.UnitModel;
+/**
+ * Model P2HInspection
+ *
+ */
+export type P2HInspection = Prisma.P2HInspectionModel;
 //# sourceMappingURL=browser.d.ts.map

@@ -246,6 +246,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export declare const ModelName: {
     readonly User: 'User';
     readonly Unit: 'Unit';
+    readonly P2HInspection: 'P2HInspection';
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export interface TypeMapCb<GlobalOmitOptions = {}> extends runtime.Types.Utils.Fn<{
@@ -258,7 +259,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         omit: GlobalOmitOptions;
     };
     meta: {
-        modelProps: "user" | "unit";
+        modelProps: "user" | "unit" | "p2HInspection";
         txIsolationLevel: TransactionIsolationLevel;
     };
     model: {
@@ -410,6 +411,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
                 };
             };
         };
+        P2HInspection: {
+            payload: Prisma.$P2HInspectionPayload<ExtArgs>;
+            fields: Prisma.P2HInspectionFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.P2HInspectionFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$P2HInspectionPayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.P2HInspectionFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$P2HInspectionPayload>;
+                };
+                findFirst: {
+                    args: Prisma.P2HInspectionFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$P2HInspectionPayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.P2HInspectionFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$P2HInspectionPayload>;
+                };
+                findMany: {
+                    args: Prisma.P2HInspectionFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$P2HInspectionPayload>[];
+                };
+                create: {
+                    args: Prisma.P2HInspectionCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$P2HInspectionPayload>;
+                };
+                createMany: {
+                    args: Prisma.P2HInspectionCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                createManyAndReturn: {
+                    args: Prisma.P2HInspectionCreateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$P2HInspectionPayload>[];
+                };
+                delete: {
+                    args: Prisma.P2HInspectionDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$P2HInspectionPayload>;
+                };
+                update: {
+                    args: Prisma.P2HInspectionUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$P2HInspectionPayload>;
+                };
+                deleteMany: {
+                    args: Prisma.P2HInspectionDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.P2HInspectionUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateManyAndReturn: {
+                    args: Prisma.P2HInspectionUpdateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$P2HInspectionPayload>[];
+                };
+                upsert: {
+                    args: Prisma.P2HInspectionUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$P2HInspectionPayload>;
+                };
+                aggregate: {
+                    args: Prisma.P2HInspectionAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateP2HInspection>;
+                };
+                groupBy: {
+                    args: Prisma.P2HInspectionGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.P2HInspectionGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.P2HInspectionCountArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.P2HInspectionCountAggregateOutputType> | number;
+                };
+            };
+        };
     };
 } & {
     other: {
@@ -473,11 +548,47 @@ export declare const UnitScalarFieldEnum: {
     readonly updatedAt: 'updatedAt';
 };
 export type UnitScalarFieldEnum = (typeof UnitScalarFieldEnum)[keyof typeof UnitScalarFieldEnum];
+export declare const P2HInspectionScalarFieldEnum: {
+    readonly id: 'id';
+    readonly p2hNo: 'p2hNo';
+    readonly unitId: 'unitId';
+    readonly userId: 'userId';
+    readonly driverName: 'driverName';
+    readonly driverNrp: 'driverNrp';
+    readonly nopol: 'nopol';
+    readonly section: 'section';
+    readonly workSystem: 'workSystem';
+    readonly shift: 'shift';
+    readonly date: 'date';
+    readonly km: 'km';
+    readonly hourMeter: 'hourMeter';
+    readonly damageChecks: 'damageChecks';
+    readonly tyreCheck: 'tyreCheck';
+    readonly safetyTools: 'safetyTools';
+    readonly fitToWork: 'fitToWork';
+    readonly warningDetails: 'warningDetails';
+    readonly driverValidation: 'driverValidation';
+    readonly unitStatus: 'unitStatus';
+    readonly driverStatus: 'driverStatus';
+    readonly supervisorNotes: 'supervisorNotes';
+    readonly createdAt: 'createdAt';
+    readonly updatedAt: 'updatedAt';
+};
+export type P2HInspectionScalarFieldEnum = (typeof P2HInspectionScalarFieldEnum)[keyof typeof P2HInspectionScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: 'asc';
     readonly desc: 'desc';
 };
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
+export declare const NullableJsonNullValueInput: {
+    readonly DbNull: runtime.DbNullClass;
+    readonly JsonNull: runtime.JsonNullClass;
+};
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
+export declare const JsonNullValueInput: {
+    readonly JsonNull: runtime.JsonNullClass;
+};
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput];
 export declare const QueryMode: {
     readonly default: 'default';
     readonly insensitive: 'insensitive';
@@ -488,6 +599,12 @@ export declare const NullsOrder: {
     readonly last: 'last';
 };
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder];
+export declare const JsonNullValueFilter: {
+    readonly DbNull: runtime.DbNullClass;
+    readonly JsonNull: runtime.JsonNullClass;
+    readonly AnyNull: runtime.AnyNullClass;
+};
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter];
 /**
  * Field references
  */
@@ -555,6 +672,42 @@ export type EnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
  * Reference to a field of type 'Status[]'
  */
 export type ListEnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status[]'>;
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>;
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>;
+/**
+ * Reference to a field of type 'Shift'
+ */
+export type EnumShiftFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Shift'>;
+/**
+ * Reference to a field of type 'Shift[]'
+ */
+export type ListEnumShiftFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Shift[]'>;
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>;
+/**
+ * Reference to a field of type 'P2HUnitStatus'
+ */
+export type EnumP2HUnitStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'P2HUnitStatus'>;
+/**
+ * Reference to a field of type 'P2HUnitStatus[]'
+ */
+export type ListEnumP2HUnitStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'P2HUnitStatus[]'>;
+/**
+ * Reference to a field of type 'P2HDriverStatus'
+ */
+export type EnumP2HDriverStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'P2HDriverStatus'>;
+/**
+ * Reference to a field of type 'P2HDriverStatus[]'
+ */
+export type ListEnumP2HDriverStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'P2HDriverStatus[]'>;
 /**
  * Reference to a field of type 'Float'
  */
@@ -712,6 +865,7 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
     user?: Prisma.UserOmit;
     unit?: Prisma.UnitOmit;
+    p2HInspection?: Prisma.P2HInspectionOmit;
 };
 export type LogLevel = 'info' | 'query' | 'warn' | 'error';
 export type LogDefinition = {

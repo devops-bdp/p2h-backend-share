@@ -12,6 +12,6 @@
     "esModuleInterop": true,
     "types": ["node"]
   },
-  "include": ["src/**/*", "generated/**/*", "prisma.config.ts", "prisma7.config.ts"],
+  "include": ["src/**/*", "generated/**/*", "prisma.config.ts", "prisma7.config.ts", "api/**/*"],
   "exclude": ["node_modules", "dist"]
 }

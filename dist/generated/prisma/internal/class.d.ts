@@ -139,6 +139,17 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
     get unit(): Prisma.UnitDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
+    /**
+     * `prisma.p2HInspection`: Exposes CRUD operations for the **P2HInspection** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more P2HInspections
+      * const p2HInspections = await prisma.p2HInspection.findMany()
+      * ```
+      */
+    get p2HInspection(): Prisma.P2HInspectionDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
 }
 export declare function getPrismaClientClass(): PrismaClientConstructor;
 //# sourceMappingURL=class.d.ts.map

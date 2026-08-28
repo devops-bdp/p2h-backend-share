@@ -40,7 +40,8 @@ export const JsonNull = runtime.JsonNull;
 export const AnyNull = runtime.AnyNull;
 export const ModelName = {
     User: 'User',
-    Unit: 'Unit'
+    Unit: 'Unit',
+    P2HInspection: 'P2HInspection'
 };
 /*
  * Enums
@@ -78,9 +79,42 @@ export const UnitScalarFieldEnum = {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
+export const P2HInspectionScalarFieldEnum = {
+    id: 'id',
+    p2hNo: 'p2hNo',
+    unitId: 'unitId',
+    userId: 'userId',
+    driverName: 'driverName',
+    driverNrp: 'driverNrp',
+    nopol: 'nopol',
+    section: 'section',
+    workSystem: 'workSystem',
+    shift: 'shift',
+    date: 'date',
+    km: 'km',
+    hourMeter: 'hourMeter',
+    damageChecks: 'damageChecks',
+    tyreCheck: 'tyreCheck',
+    safetyTools: 'safetyTools',
+    fitToWork: 'fitToWork',
+    warningDetails: 'warningDetails',
+    driverValidation: 'driverValidation',
+    unitStatus: 'unitStatus',
+    driverStatus: 'driverStatus',
+    supervisorNotes: 'supervisorNotes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
 export const SortOrder = {
     asc: 'asc',
     desc: 'desc'
+};
+export const NullableJsonNullValueInput = {
+    DbNull: DbNull,
+    JsonNull: JsonNull
+};
+export const JsonNullValueInput = {
+    JsonNull: JsonNull
 };
 export const QueryMode = {
     default: 'default',
@@ -89,5 +123,10 @@ export const QueryMode = {
 export const NullsOrder = {
     first: 'first',
     last: 'last'
+};
+export const JsonNullValueFilter = {
+    DbNull: DbNull,
+    JsonNull: JsonNull,
+    AnyNull: AnyNull
 };
 //# sourceMappingURL=prismaNamespaceBrowser.js.map

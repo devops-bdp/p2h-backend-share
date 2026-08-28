@@ -1,9 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { prisma } from './config/prisma.js';
 import authRouter from './router/auth.router.js';
 import unitRouter from './router/unit.router.js';
+import p2hRouter from './router/p2h.router.js';
+import userRouter from './router/user.router.js';
+import defectRouter from './router/defect.router.js';
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -12,6 +14,9 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRouter);
 app.use('/api/units', unitRouter);
+app.use('/api/p2h', p2hRouter);
+app.use('/api/users', userRouter);
+app.use('/api/defects', defectRouter);
 // Endpoint cek kesehatan server
 app.get('/', (_req, res) => {
     res.json({
@@ -19,17 +24,10 @@ app.get('/', (_req, res) => {
         message: 'Server Express & TypeScript berjalan!',
     });
 });
-// Endpoint test Prisma query ke Supabase
-app.get('/api/users', async (_req, res) => {
-    try {
-        const users = await prisma.user.findMany();
-        return res.json({ success: true, count: users.length, data: users });
-    }
-    catch (err) {
-        return res.status(500).json({ success: false, message: err.message });
-    }
-});
-app.listen(PORT, () => {
-    console.log(`Server berjalan di http://localhost:${PORT}`);
-});
+if (!process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`Server berjalan di http://localhost:${PORT}`);
+    });
+}
+export default app;
 //# sourceMappingURL=index.js.map

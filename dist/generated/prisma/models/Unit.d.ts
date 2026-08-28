@@ -225,6 +225,7 @@ export type UnitWhereInput = {
     status?: Prisma.EnumStatusFilter<"Unit"> | $Enums.Status;
     createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Unit"> | Date | string;
+    p2hInspections?: Prisma.P2HInspectionListRelationFilter;
 };
 export type UnitOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
@@ -238,6 +239,7 @@ export type UnitOrderByWithRelationInput = {
     status?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    p2hInspections?: Prisma.P2HInspectionOrderByRelationAggregateInput;
 };
 export type UnitWhereUniqueInput = Prisma.AtLeast<{
     id?: number;
@@ -254,6 +256,7 @@ export type UnitWhereUniqueInput = Prisma.AtLeast<{
     status?: Prisma.EnumStatusFilter<"Unit"> | $Enums.Status;
     createdAt?: Prisma.DateTimeFilter<"Unit"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Unit"> | Date | string;
+    p2hInspections?: Prisma.P2HInspectionListRelationFilter;
 }, "id" | "unitNo">;
 export type UnitOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
@@ -300,6 +303,7 @@ export type UnitCreateInput = {
     status?: $Enums.Status;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    p2hInspections?: Prisma.P2HInspectionCreateNestedManyWithoutUnitInput;
 };
 export type UnitUncheckedCreateInput = {
     id?: number;
@@ -313,6 +317,7 @@ export type UnitUncheckedCreateInput = {
     status?: $Enums.Status;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    p2hInspections?: Prisma.P2HInspectionUncheckedCreateNestedManyWithoutUnitInput;
 };
 export type UnitUpdateInput = {
     unitNo?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -325,6 +330,7 @@ export type UnitUpdateInput = {
     status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    p2hInspections?: Prisma.P2HInspectionUpdateManyWithoutUnitNestedInput;
 };
 export type UnitUncheckedUpdateInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
@@ -338,6 +344,7 @@ export type UnitUncheckedUpdateInput = {
     status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    p2hInspections?: Prisma.P2HInspectionUncheckedUpdateManyWithoutUnitNestedInput;
 };
 export type UnitCreateManyInput = {
     id?: number;
@@ -426,6 +433,10 @@ export type UnitSumOrderByAggregateInput = {
     km?: Prisma.SortOrder;
     hourMeter?: Prisma.SortOrder;
 };
+export type UnitScalarRelationFilter = {
+    is?: Prisma.UnitWhereInput;
+    isNot?: Prisma.UnitWhereInput;
+};
 export type EnumSupportVehicleCategoryFieldUpdateOperationsInput = {
     set?: $Enums.SupportVehicleCategory;
 };
@@ -439,6 +450,105 @@ export type NullableIntFieldUpdateOperationsInput = {
 export type EnumStatusFieldUpdateOperationsInput = {
     set?: $Enums.Status;
 };
+export type UnitCreateNestedOneWithoutP2hInspectionsInput = {
+    create?: Prisma.XOR<Prisma.UnitCreateWithoutP2hInspectionsInput, Prisma.UnitUncheckedCreateWithoutP2hInspectionsInput>;
+    connectOrCreate?: Prisma.UnitCreateOrConnectWithoutP2hInspectionsInput;
+    connect?: Prisma.UnitWhereUniqueInput;
+};
+export type UnitUpdateOneRequiredWithoutP2hInspectionsNestedInput = {
+    create?: Prisma.XOR<Prisma.UnitCreateWithoutP2hInspectionsInput, Prisma.UnitUncheckedCreateWithoutP2hInspectionsInput>;
+    connectOrCreate?: Prisma.UnitCreateOrConnectWithoutP2hInspectionsInput;
+    upsert?: Prisma.UnitUpsertWithoutP2hInspectionsInput;
+    connect?: Prisma.UnitWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UnitUpdateToOneWithWhereWithoutP2hInspectionsInput, Prisma.UnitUpdateWithoutP2hInspectionsInput>, Prisma.UnitUncheckedUpdateWithoutP2hInspectionsInput>;
+};
+export type UnitCreateWithoutP2hInspectionsInput = {
+    unitNo: string;
+    category: $Enums.SupportVehicleCategory;
+    brand: string;
+    description: string;
+    ownerName: string;
+    km: number;
+    hourMeter?: number | null;
+    status?: $Enums.Status;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type UnitUncheckedCreateWithoutP2hInspectionsInput = {
+    id?: number;
+    unitNo: string;
+    category: $Enums.SupportVehicleCategory;
+    brand: string;
+    description: string;
+    ownerName: string;
+    km: number;
+    hourMeter?: number | null;
+    status?: $Enums.Status;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type UnitCreateOrConnectWithoutP2hInspectionsInput = {
+    where: Prisma.UnitWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UnitCreateWithoutP2hInspectionsInput, Prisma.UnitUncheckedCreateWithoutP2hInspectionsInput>;
+};
+export type UnitUpsertWithoutP2hInspectionsInput = {
+    update: Prisma.XOR<Prisma.UnitUpdateWithoutP2hInspectionsInput, Prisma.UnitUncheckedUpdateWithoutP2hInspectionsInput>;
+    create: Prisma.XOR<Prisma.UnitCreateWithoutP2hInspectionsInput, Prisma.UnitUncheckedCreateWithoutP2hInspectionsInput>;
+    where?: Prisma.UnitWhereInput;
+};
+export type UnitUpdateToOneWithWhereWithoutP2hInspectionsInput = {
+    where?: Prisma.UnitWhereInput;
+    data: Prisma.XOR<Prisma.UnitUpdateWithoutP2hInspectionsInput, Prisma.UnitUncheckedUpdateWithoutP2hInspectionsInput>;
+};
+export type UnitUpdateWithoutP2hInspectionsInput = {
+    unitNo?: Prisma.StringFieldUpdateOperationsInput | string;
+    category?: Prisma.EnumSupportVehicleCategoryFieldUpdateOperationsInput | $Enums.SupportVehicleCategory;
+    brand?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.StringFieldUpdateOperationsInput | string;
+    ownerName?: Prisma.StringFieldUpdateOperationsInput | string;
+    km?: Prisma.IntFieldUpdateOperationsInput | number;
+    hourMeter?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type UnitUncheckedUpdateWithoutP2hInspectionsInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    unitNo?: Prisma.StringFieldUpdateOperationsInput | string;
+    category?: Prisma.EnumSupportVehicleCategoryFieldUpdateOperationsInput | $Enums.SupportVehicleCategory;
+    brand?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.StringFieldUpdateOperationsInput | string;
+    ownerName?: Prisma.StringFieldUpdateOperationsInput | string;
+    km?: Prisma.IntFieldUpdateOperationsInput | number;
+    hourMeter?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+/**
+ * Count Type UnitCountOutputType
+ */
+export type UnitCountOutputType = {
+    p2hInspections: number;
+};
+export type UnitCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    p2hInspections?: boolean | UnitCountOutputTypeCountP2hInspectionsArgs;
+};
+/**
+ * UnitCountOutputType without action
+ */
+export type UnitCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UnitCountOutputType
+     */
+    select?: Prisma.UnitCountOutputTypeSelect<ExtArgs> | null;
+};
+/**
+ * UnitCountOutputType without action
+ */
+export type UnitCountOutputTypeCountP2hInspectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.P2HInspectionWhereInput;
+};
 export type UnitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     unitNo?: boolean;
@@ -451,6 +561,8 @@ export type UnitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     status?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    p2hInspections?: boolean | Prisma.Unit$p2hInspectionsArgs<ExtArgs>;
+    _count?: boolean | Prisma.UnitCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["unit"]>;
 export type UnitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -492,9 +604,17 @@ export type UnitSelectScalar = {
     updatedAt?: boolean;
 };
 export type UnitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "unitNo" | "category" | "brand" | "description" | "ownerName" | "km" | "hourMeter" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["unit"]>;
+export type UnitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    p2hInspections?: boolean | Prisma.Unit$p2hInspectionsArgs<ExtArgs>;
+    _count?: boolean | Prisma.UnitCountOutputTypeDefaultArgs<ExtArgs>;
+};
+export type UnitIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
+export type UnitIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
 export type $UnitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "Unit";
-    objects: {};
+    objects: {
+        p2hInspections: Prisma.$P2HInspectionPayload<ExtArgs>[];
+    };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: number;
         unitNo: string;
@@ -836,6 +956,7 @@ export interface UnitDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
  */
 export interface Prisma__UnitClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
+    p2hInspections<T extends Prisma.Unit$p2hInspectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Unit$p2hInspectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$P2HInspectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -886,6 +1007,10 @@ export type UnitFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Internal
      */
     omit?: Prisma.UnitOmit<ExtArgs> | null;
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UnitInclude<ExtArgs> | null;
+    /**
      * Filter, which Unit to fetch.
      */
     where: Prisma.UnitWhereUniqueInput;
@@ -903,6 +1028,10 @@ export type UnitFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
      */
     omit?: Prisma.UnitOmit<ExtArgs> | null;
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UnitInclude<ExtArgs> | null;
+    /**
      * Filter, which Unit to fetch.
      */
     where: Prisma.UnitWhereUniqueInput;
@@ -919,6 +1048,10 @@ export type UnitFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalA
      * Omit specific fields from the Unit
      */
     omit?: Prisma.UnitOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UnitInclude<ExtArgs> | null;
     /**
      * Filter, which Unit to fetch.
      */
@@ -967,6 +1100,10 @@ export type UnitFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
      */
     omit?: Prisma.UnitOmit<ExtArgs> | null;
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UnitInclude<ExtArgs> | null;
+    /**
      * Filter, which Unit to fetch.
      */
     where?: Prisma.UnitWhereInput;
@@ -1013,6 +1150,10 @@ export type UnitFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
      * Omit specific fields from the Unit
      */
     omit?: Prisma.UnitOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UnitInclude<ExtArgs> | null;
     /**
      * Filter, which Units to fetch.
      */
@@ -1061,6 +1202,10 @@ export type UnitCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
      */
     omit?: Prisma.UnitOmit<ExtArgs> | null;
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UnitInclude<ExtArgs> | null;
+    /**
      * The data needed to create a Unit.
      */
     data: Prisma.XOR<Prisma.UnitCreateInput, Prisma.UnitUncheckedCreateInput>;
@@ -1105,6 +1250,10 @@ export type UnitUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
      * Omit specific fields from the Unit
      */
     omit?: Prisma.UnitOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UnitInclude<ExtArgs> | null;
     /**
      * The data needed to update a Unit.
      */
@@ -1169,6 +1318,10 @@ export type UnitUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
      */
     omit?: Prisma.UnitOmit<ExtArgs> | null;
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UnitInclude<ExtArgs> | null;
+    /**
      * The filter to search for the Unit to update in case it exists.
      */
     where: Prisma.UnitWhereUniqueInput;
@@ -1194,6 +1347,10 @@ export type UnitDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
      */
     omit?: Prisma.UnitOmit<ExtArgs> | null;
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UnitInclude<ExtArgs> | null;
+    /**
      * Filter which Unit to delete.
      */
     where: Prisma.UnitWhereUniqueInput;
@@ -1212,6 +1369,29 @@ export type UnitDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
     limit?: number;
 };
 /**
+ * Unit.p2hInspections
+ */
+export type Unit$p2hInspectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the P2HInspection
+     */
+    select?: Prisma.P2HInspectionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the P2HInspection
+     */
+    omit?: Prisma.P2HInspectionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.P2HInspectionInclude<ExtArgs> | null;
+    where?: Prisma.P2HInspectionWhereInput;
+    orderBy?: Prisma.P2HInspectionOrderByWithRelationInput | Prisma.P2HInspectionOrderByWithRelationInput[];
+    cursor?: Prisma.P2HInspectionWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.P2HInspectionScalarFieldEnum | Prisma.P2HInspectionScalarFieldEnum[];
+};
+/**
  * Unit without action
  */
 export type UnitDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1223,5 +1403,9 @@ export type UnitDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
      * Omit specific fields from the Unit
      */
     omit?: Prisma.UnitOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UnitInclude<ExtArgs> | null;
 };
 //# sourceMappingURL=Unit.d.ts.map
