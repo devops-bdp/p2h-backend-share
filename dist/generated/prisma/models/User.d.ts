@@ -31,6 +31,7 @@ export type UserMinAggregateOutputType = {
     posision: $Enums.Posision | null;
     phoneNumber: string | null;
     email: string | null;
+    avatar: string | null;
     role: $Enums.Role | null;
     createdAt: Date | null;
     updatedAt: Date | null;
@@ -45,6 +46,7 @@ export type UserMaxAggregateOutputType = {
     posision: $Enums.Posision | null;
     phoneNumber: string | null;
     email: string | null;
+    avatar: string | null;
     role: $Enums.Role | null;
     createdAt: Date | null;
     updatedAt: Date | null;
@@ -59,6 +61,7 @@ export type UserCountAggregateOutputType = {
     posision: number;
     phoneNumber: number;
     email: number;
+    avatar: number;
     role: number;
     createdAt: number;
     updatedAt: number;
@@ -82,6 +85,7 @@ export type UserMinAggregateInputType = {
     posision?: true;
     phoneNumber?: true;
     email?: true;
+    avatar?: true;
     role?: true;
     createdAt?: true;
     updatedAt?: true;
@@ -96,6 +100,7 @@ export type UserMaxAggregateInputType = {
     posision?: true;
     phoneNumber?: true;
     email?: true;
+    avatar?: true;
     role?: true;
     createdAt?: true;
     updatedAt?: true;
@@ -110,6 +115,7 @@ export type UserCountAggregateInputType = {
     posision?: true;
     phoneNumber?: true;
     email?: true;
+    avatar?: true;
     role?: true;
     createdAt?: true;
     updatedAt?: true;
@@ -201,6 +207,7 @@ export type UserGroupByOutputType = {
     posision: $Enums.Posision;
     phoneNumber: string | null;
     email: string | null;
+    avatar: string | null;
     role: $Enums.Role;
     createdAt: Date;
     updatedAt: Date;
@@ -226,6 +233,7 @@ export type UserWhereInput = {
     posision?: Prisma.EnumPosisionFilter<"User"> | $Enums.Posision;
     phoneNumber?: Prisma.StringNullableFilter<"User"> | string | null;
     email?: Prisma.StringNullableFilter<"User"> | string | null;
+    avatar?: Prisma.StringNullableFilter<"User"> | string | null;
     role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
@@ -241,6 +249,7 @@ export type UserOrderByWithRelationInput = {
     posision?: Prisma.SortOrder;
     phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder;
     email?: Prisma.SortOrderInput | Prisma.SortOrder;
+    avatar?: Prisma.SortOrderInput | Prisma.SortOrder;
     role?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -259,6 +268,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     posision?: Prisma.EnumPosisionFilter<"User"> | $Enums.Posision;
     phoneNumber?: Prisma.StringNullableFilter<"User"> | string | null;
     email?: Prisma.StringNullableFilter<"User"> | string | null;
+    avatar?: Prisma.StringNullableFilter<"User"> | string | null;
     role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
@@ -274,6 +284,7 @@ export type UserOrderByWithAggregationInput = {
     posision?: Prisma.SortOrder;
     phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder;
     email?: Prisma.SortOrderInput | Prisma.SortOrder;
+    avatar?: Prisma.SortOrderInput | Prisma.SortOrder;
     role?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -296,6 +307,7 @@ export type UserScalarWhereWithAggregatesInput = {
     posision?: Prisma.EnumPosisionWithAggregatesFilter<"User"> | $Enums.Posision;
     phoneNumber?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
     email?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    avatar?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
     role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
@@ -309,6 +321,7 @@ export type UserCreateInput = {
     posision?: $Enums.Posision;
     phoneNumber?: string | null;
     email?: string | null;
+    avatar?: string | null;
     role?: $Enums.Role;
     createdAt?: Date | string;
     updatedAt?: Date | string;
@@ -324,6 +337,7 @@ export type UserUncheckedCreateInput = {
     posision?: $Enums.Posision;
     phoneNumber?: string | null;
     email?: string | null;
+    avatar?: string | null;
     role?: $Enums.Role;
     createdAt?: Date | string;
     updatedAt?: Date | string;
@@ -338,6 +352,7 @@ export type UserUpdateInput = {
     posision?: Prisma.EnumPosisionFieldUpdateOperationsInput | $Enums.Posision;
     phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -353,6 +368,7 @@ export type UserUncheckedUpdateInput = {
     posision?: Prisma.EnumPosisionFieldUpdateOperationsInput | $Enums.Posision;
     phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -368,6 +384,7 @@ export type UserCreateManyInput = {
     posision?: $Enums.Posision;
     phoneNumber?: string | null;
     email?: string | null;
+    avatar?: string | null;
     role?: $Enums.Role;
     createdAt?: Date | string;
     updatedAt?: Date | string;
@@ -381,6 +398,7 @@ export type UserUpdateManyMutationInput = {
     posision?: Prisma.EnumPosisionFieldUpdateOperationsInput | $Enums.Posision;
     phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -395,6 +413,7 @@ export type UserUncheckedUpdateManyInput = {
     posision?: Prisma.EnumPosisionFieldUpdateOperationsInput | $Enums.Posision;
     phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -409,6 +428,7 @@ export type UserCountOrderByAggregateInput = {
     posision?: Prisma.SortOrder;
     phoneNumber?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
+    avatar?: Prisma.SortOrder;
     role?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -427,6 +447,7 @@ export type UserMaxOrderByAggregateInput = {
     posision?: Prisma.SortOrder;
     phoneNumber?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
+    avatar?: Prisma.SortOrder;
     role?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -441,6 +462,7 @@ export type UserMinOrderByAggregateInput = {
     posision?: Prisma.SortOrder;
     phoneNumber?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
+    avatar?: Prisma.SortOrder;
     role?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
@@ -499,6 +521,7 @@ export type UserCreateWithoutP2hInspectionsInput = {
     posision?: $Enums.Posision;
     phoneNumber?: string | null;
     email?: string | null;
+    avatar?: string | null;
     role?: $Enums.Role;
     createdAt?: Date | string;
     updatedAt?: Date | string;
@@ -513,6 +536,7 @@ export type UserUncheckedCreateWithoutP2hInspectionsInput = {
     posision?: $Enums.Posision;
     phoneNumber?: string | null;
     email?: string | null;
+    avatar?: string | null;
     role?: $Enums.Role;
     createdAt?: Date | string;
     updatedAt?: Date | string;
@@ -539,6 +563,7 @@ export type UserUpdateWithoutP2hInspectionsInput = {
     posision?: Prisma.EnumPosisionFieldUpdateOperationsInput | $Enums.Posision;
     phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -553,6 +578,7 @@ export type UserUncheckedUpdateWithoutP2hInspectionsInput = {
     posision?: Prisma.EnumPosisionFieldUpdateOperationsInput | $Enums.Posision;
     phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -591,6 +617,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     posision?: boolean;
     phoneNumber?: boolean;
     email?: boolean;
+    avatar?: boolean;
     role?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
@@ -607,6 +634,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     posision?: boolean;
     phoneNumber?: boolean;
     email?: boolean;
+    avatar?: boolean;
     role?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
@@ -621,6 +649,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     posision?: boolean;
     phoneNumber?: boolean;
     email?: boolean;
+    avatar?: boolean;
     role?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
@@ -635,11 +664,12 @@ export type UserSelectScalar = {
     posision?: boolean;
     phoneNumber?: boolean;
     email?: boolean;
+    avatar?: boolean;
     role?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "nrp" | "password" | "department" | "posision" | "phoneNumber" | "email" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>;
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "nrp" | "password" | "department" | "posision" | "phoneNumber" | "email" | "avatar" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>;
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     p2hInspections?: boolean | Prisma.User$p2hInspectionsArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
@@ -661,6 +691,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
         posision: $Enums.Posision;
         phoneNumber: string | null;
         email: string | null;
+        avatar: string | null;
         role: $Enums.Role;
         createdAt: Date;
         updatedAt: Date;
@@ -1028,6 +1059,7 @@ export interface UserFieldRefs {
     readonly posision: Prisma.FieldRef<"User", 'Posision'>;
     readonly phoneNumber: Prisma.FieldRef<"User", 'String'>;
     readonly email: Prisma.FieldRef<"User", 'String'>;
+    readonly avatar: Prisma.FieldRef<"User", 'String'>;
     readonly role: Prisma.FieldRef<"User", 'Role'>;
     readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>;

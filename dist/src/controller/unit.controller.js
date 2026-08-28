@@ -220,12 +220,198 @@ export default function UnitController() {
             });
         }
     }
+    /**
+     * Menambahkan banyak Unit sekaligus (Bulk Create / Import)
+     * Hanya Role ADMIN / SUPERADMIN dengan Departemen PLANT / OPERATIONS
+     */
+    async function bulkCreateUnits(req, res) {
+        try {
+            const unitsData = Array.isArray(req.body)
+                ? req.body
+                : req.body?.units;
+            if (!unitsData || !Array.isArray(unitsData) || unitsData.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Data unit tidak boleh kosong. Harap sertakan array data unit.',
+                });
+            }
+            if (unitsData.length > 500) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Maksimal 500 unit dalam satu kali impor bulk.',
+                });
+            }
+            // Ambil seluruh unitNo yang sudah ada di database untuk validasi cepat
+            const existingDbUnits = await prisma.unit.findMany({
+                select: { unitNo: true },
+            });
+            const existingUnitNoSet = new Set(existingDbUnits.map((u) => u.unitNo.toUpperCase().trim()));
+            const categoryMap = {
+                LIGHT_VECHICLE: 'LIGHT_VECHICLE',
+                LIGHT_VEHICLE: 'LIGHT_VECHICLE',
+                LV: 'LIGHT_VECHICLE',
+                TELEHENDLER: 'TELEHENDLER',
+                TELEHANDLER: 'TELEHENDLER',
+                TH: 'TELEHENDLER',
+                STORING_TRUCK: 'STORING_TRUCK',
+                STORING: 'STORING_TRUCK',
+                ST: 'STORING_TRUCK',
+                FUEL_TRUCK: 'FUEL_TRUCK',
+                FUEL_TANKER: 'FUEL_TRUCK',
+                FT: 'FUEL_TRUCK',
+                GENSET: 'GENSET',
+                GENERATOR: 'GENSET',
+                GS: 'GENSET',
+                COMPRESSOR: 'COMPRESSOR',
+                KOMPRESOR: 'COMPRESSOR',
+                CP: 'COMPRESSOR',
+                COMPACTOR: 'COMPACTOR',
+                ROLLER: 'COMPACTOR',
+                CMP: 'COMPACTOR',
+                DOZER: 'DOZER',
+                BULLDOZER: 'DOZER',
+                DZ: 'DOZER',
+                EXCAVATOR: 'EXCAVATOR',
+                EXCA: 'EXCAVATOR',
+                HEX: 'EXCAVATOR',
+                CRANE_TRUCK: 'CRANE_TRUCK',
+                TRUCK_CRANE: 'CRANE_TRUCK',
+                MOBILE_CRANE: 'MOBILE_CRANE',
+                MC: 'MOBILE_CRANE',
+                AMBULANCE: 'AMBULANCE',
+                AMBULAN: 'AMBULANCE',
+            };
+            const seenInBatch = new Set();
+            const createdUnits = [];
+            const errors = [];
+            for (let i = 0; i < unitsData.length; i++) {
+                const item = unitsData[i];
+                const rowNumber = i + 1;
+                const unitNoRaw = item.unitNo ? String(item.unitNo).trim() : '';
+                const unitNoUpper = unitNoRaw.toUpperCase();
+                if (!unitNoRaw) {
+                    errors.push({
+                        row: rowNumber,
+                        unitNo: unitNoRaw,
+                        reason: 'Nomor Lambung (Unit No) wajib diisi',
+                    });
+                    continue;
+                }
+                if (seenInBatch.has(unitNoUpper)) {
+                    errors.push({
+                        row: rowNumber,
+                        unitNo: unitNoRaw,
+                        reason: `Nomor lambung "${unitNoRaw}" duplikat di dalam file impor`,
+                    });
+                    continue;
+                }
+                if (existingUnitNoSet.has(unitNoUpper)) {
+                    errors.push({
+                        row: rowNumber,
+                        unitNo: unitNoRaw,
+                        reason: `Nomor lambung "${unitNoRaw}" sudah terdaftar di sistem`,
+                    });
+                    continue;
+                }
+                const rawCat = item.category
+                    ? String(item.category).trim().toUpperCase().replace(/[\s\-_]+/g, '_')
+                    : '';
+                const validCategory = categoryMap[rawCat];
+                if (!validCategory) {
+                    errors.push({
+                        row: rowNumber,
+                        unitNo: unitNoRaw,
+                        reason: `Kategori "${item.category || '-'}" tidak valid. Pilihan: LIGHT_VECHICLE, TELEHENDLER, STORING_TRUCK, FUEL_TRUCK, GENSET, COMPRESSOR, EXCAVATOR, DOZER, COMPACTOR, CRANE_TRUCK, MOBILE_CRANE, AMBULANCE.`,
+                    });
+                    continue;
+                }
+                const brand = item.brand ? String(item.brand).trim() : 'Standard Brand';
+                const description = item.description ? String(item.description).trim() : brand;
+                const ownerName = item.ownerName ? String(item.ownerName).trim() : 'PT Batara Dharma Persada';
+                let km = 0;
+                if (item.km !== undefined && item.km !== null && item.km !== '') {
+                    const parsedKm = Number(item.km);
+                    if (isNaN(parsedKm) || parsedKm < 0) {
+                        errors.push({
+                            row: rowNumber,
+                            unitNo: unitNoRaw,
+                            reason: 'Nilai Kilometer (KM) harus berupa angka >= 0',
+                        });
+                        continue;
+                    }
+                    km = parsedKm;
+                }
+                let hourMeter = null;
+                if (item.hourMeter !== undefined && item.hourMeter !== null && item.hourMeter !== '') {
+                    const parsedHm = Number(item.hourMeter);
+                    if (isNaN(parsedHm) || parsedHm < 0) {
+                        errors.push({
+                            row: rowNumber,
+                            unitNo: unitNoRaw,
+                            reason: 'Nilai Hour Meter (HM) harus berupa angka >= 0 atau dikosongkan',
+                        });
+                        continue;
+                    }
+                    hourMeter = parsedHm;
+                }
+                let status = 'ACTIVE';
+                if (item.status) {
+                    const stClean = String(item.status).trim().toUpperCase();
+                    if (stClean === 'INACTIVE' || stClean === 'NONAKTIF' || stClean === 'NON_AKTIF' || stClean === 'NON-AKTIF') {
+                        status = 'INACTIVE';
+                    }
+                }
+                seenInBatch.add(unitNoUpper);
+                try {
+                    const newUnit = await prisma.unit.create({
+                        data: {
+                            unitNo: unitNoRaw,
+                            category: validCategory,
+                            brand,
+                            description,
+                            ownerName,
+                            km,
+                            hourMeter,
+                            status,
+                        },
+                    });
+                    existingUnitNoSet.add(unitNoUpper);
+                    createdUnits.push(newUnit);
+                }
+                catch (err) {
+                    errors.push({
+                        row: rowNumber,
+                        unitNo: unitNoRaw,
+                        reason: err.message || 'Gagal menyimpan ke database',
+                    });
+                }
+            }
+            return res.status(200).json({
+                success: true,
+                message: `Impor bulk unit selesai: ${createdUnits.length} unit berhasil dibuat, ${errors.length} gagal/dilewati.`,
+                summary: {
+                    totalProcessed: unitsData.length,
+                    successCount: createdUnits.length,
+                    failedCount: errors.length,
+                },
+                createdUnits,
+                errors,
+            });
+        }
+        catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: error.message || 'Terjadi kesalahan pada server saat memproses bulk create unit',
+            });
+        }
+    }
     return {
         createUnit,
         getAllUnits,
         getUnitById,
         updateUnit,
         deleteUnit,
+        bulkCreateUnits,
     };
 }
 //# sourceMappingURL=unit.controller.js.map

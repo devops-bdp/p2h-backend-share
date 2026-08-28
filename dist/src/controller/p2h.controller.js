@@ -301,10 +301,16 @@ export async function getAllP2HInspections(req, res) {
         }
         if (startDate || endDate) {
             where.date = {};
-            if (startDate)
-                where.date.gte = new Date(String(startDate));
-            if (endDate)
-                where.date.lte = new Date(String(endDate));
+            if (startDate) {
+                const start = new Date(String(startDate));
+                start.setUTCHours(0, 0, 0, 0);
+                where.date.gte = start;
+            }
+            if (endDate) {
+                const end = new Date(String(endDate));
+                end.setUTCHours(23, 59, 59, 999);
+                where.date.lte = end;
+            }
         }
         if (search) {
             const searchStr = String(search);

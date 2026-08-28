@@ -2,6 +2,7 @@ import { Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { prisma } from '../config/prisma.js';
 import { AuthRequest } from '../middleware/auth.middleware.js';
+import { uploadUserAvatar, deleteUserAvatar } from '../config/cloudinary.js';
 
 export default function UserController() {
   /**
@@ -55,6 +56,7 @@ export default function UserController() {
           phoneNumber: true,
           email: true,
           role: true,
+          avatar: true,
           createdAt: true,
           updatedAt: true,
           _count: {
@@ -105,6 +107,7 @@ export default function UserController() {
           phoneNumber: true,
           email: true,
           role: true,
+          avatar: true,
           createdAt: true,
           updatedAt: true,
           _count: {
@@ -211,6 +214,7 @@ export default function UserController() {
           phoneNumber: true,
           email: true,
           role: true,
+          avatar: true,
           createdAt: true,
           updatedAt: true,
         },
@@ -337,6 +341,7 @@ export default function UserController() {
           phoneNumber: true,
           email: true,
           role: true,
+          avatar: true,
           createdAt: true,
           updatedAt: true,
         },
@@ -657,6 +662,7 @@ export default function UserController() {
               phoneNumber: true,
               email: true,
               role: true,
+              avatar: true,
               createdAt: true,
               updatedAt: true,
             },
@@ -694,12 +700,167 @@ export default function UserController() {
     }
   }
 
+  /**
+   * Upload Avatar Profil User ke Cloudinary (folder: p2h-app/user-avatar)
+   */
+  async function uploadAvatar(req: AuthRequest, res: Response) {
+    try {
+      const targetUserId = req.params.id ? Number(req.params.id) : req.user?.id;
+
+      if (!targetUserId || isNaN(targetUserId)) {
+        return res.status(400).json({
+          success: false,
+          message: 'ID user tidak valid',
+        });
+      }
+
+      // Validasi izin: User biasa hanya boleh update avatar dirinya sendiri
+      if (req.user?.role === 'USER' && req.user.id !== targetUserId) {
+        return res.status(403).json({
+          success: false,
+          message: 'Anda tidak memiliki izin untuk mengubah avatar profil pengguna lain',
+        });
+      }
+
+      const file = req.file;
+      if (!file) {
+        return res.status(400).json({
+          success: false,
+          message: 'File foto avatar wajib dilampirkan (field: avatar)',
+        });
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: targetUserId },
+      });
+
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: 'Pengguna tidak ditemukan',
+        });
+      }
+
+      // Upload ke Cloudinary folder p2h-app/user-avatar
+      const uploadRes = await uploadUserAvatar(file.buffer, targetUserId);
+      const newAvatarUrl = uploadRes.secure_url;
+
+      // Hapus avatar lama jika ada
+      if (user.avatar) {
+        deleteUserAvatar(user.avatar).catch((err) => {
+          console.error('Gagal menghapus avatar lama dari Cloudinary:', err);
+        });
+      }
+
+      // Simpan URL avatar baru ke database PostgreSQL
+      const updatedUser = await prisma.user.update({
+        where: { id: targetUserId },
+        data: { avatar: newAvatarUrl },
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          nrp: true,
+          department: true,
+          posision: true,
+          phoneNumber: true,
+          email: true,
+          role: true,
+          avatar: true,
+          updatedAt: true,
+        },
+      });
+
+      return res.json({
+        success: true,
+        message: 'Foto avatar profil berhasil diperbarui',
+        avatarUrl: newAvatarUrl,
+        data: updatedUser,
+      });
+    } catch (error: any) {
+      console.error('Error saat upload avatar ke Cloudinary:', error);
+      return res.status(500).json({
+        success: false,
+        message: error.message || 'Terjadi kesalahan saat mengunggah foto ke Cloudinary',
+      });
+    }
+  }
+
+  /**
+   * Hapus Avatar Profil User
+   */
+  async function deleteAvatar(req: AuthRequest, res: Response) {
+    try {
+      const targetUserId = req.params.id ? Number(req.params.id) : req.user?.id;
+
+      if (!targetUserId || isNaN(targetUserId)) {
+        return res.status(400).json({
+          success: false,
+          message: 'ID user tidak valid',
+        });
+      }
+
+      if (req.user?.role === 'USER' && req.user.id !== targetUserId) {
+        return res.status(403).json({
+          success: false,
+          message: 'Anda tidak memiliki izin untuk menghapus avatar pengguna lain',
+        });
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: targetUserId },
+      });
+
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: 'Pengguna tidak ditemukan',
+        });
+      }
+
+      if (user.avatar) {
+        await deleteUserAvatar(user.avatar);
+      }
+
+      const updatedUser = await prisma.user.update({
+        where: { id: targetUserId },
+        data: { avatar: null },
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          nrp: true,
+          department: true,
+          posision: true,
+          phoneNumber: true,
+          email: true,
+          role: true,
+          avatar: true,
+          updatedAt: true,
+        },
+      });
+
+      return res.json({
+        success: true,
+        message: 'Foto avatar berhasil dihapus',
+        data: updatedUser,
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: error.message || 'Terjadi kesalahan saat menghapus foto avatar',
+      });
+    }
+  }
+
   return {
     getAllUsers,
     getUserById,
     createUser,
     bulkCreateUsers,
     updateUser,
+    uploadAvatar,
+    deleteAvatar,
     resetUserPassword,
     deleteUser,
   };

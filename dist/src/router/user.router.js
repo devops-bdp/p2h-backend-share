@@ -1,13 +1,20 @@
 import { Router } from 'express';
 import UserController from '../controller/user.controller.js';
 import { authenticateToken, authorizeRoles, } from '../middleware/auth.middleware.js';
+import { uploadAvatarMiddleware } from '../middleware/upload.middleware.js';
 const userRouter = Router();
-const { getAllUsers, getUserById, createUser, bulkCreateUsers, updateUser, resetUserPassword, deleteUser, } = UserController();
+const { getAllUsers, getUserById, createUser, bulkCreateUsers, updateUser, uploadAvatar, deleteAvatar, resetUserPassword, deleteUser, } = UserController();
+// Upload & Hapus Avatar Pengguna Login (Semua role terautentikasi)
+userRouter.post('/avatar', authenticateToken, uploadAvatarMiddleware, uploadAvatar);
+userRouter.delete('/avatar', authenticateToken, deleteAvatar);
 // Mengambil list user & detail user (Hanya role SUPERADMIN & ADMIN)
 userRouter.get('/', authenticateToken, authorizeRoles('SUPERADMIN', 'ADMIN'), getAllUsers);
 // Bulk Create Users (Harus sebelum /:id agar tidak tertangkap sebagai param)
 userRouter.post('/bulk', authenticateToken, authorizeRoles('SUPERADMIN', 'ADMIN'), bulkCreateUsers);
 userRouter.get('/:id', authenticateToken, authorizeRoles('SUPERADMIN', 'ADMIN'), getUserById);
+// Upload & Hapus Avatar User spesifik by ID (SUPERADMIN & ADMIN atau pemilik)
+userRouter.post('/:id/avatar', authenticateToken, uploadAvatarMiddleware, uploadAvatar);
+userRouter.delete('/:id/avatar', authenticateToken, deleteAvatar);
 // Menambahkan single user baru (Hanya role SUPERADMIN & ADMIN)
 userRouter.post('/', authenticateToken, authorizeRoles('SUPERADMIN', 'ADMIN'), createUser);
 // Memperbarui data user (Hanya role SUPERADMIN & ADMIN)

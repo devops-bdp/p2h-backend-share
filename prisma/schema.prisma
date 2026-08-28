@@ -87,6 +87,7 @@ model User {
   posision       Posision        @default(ADMIN)
   phoneNumber    String?
   email          String?
+  avatar         String?
   role           Role            @default(USER)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt

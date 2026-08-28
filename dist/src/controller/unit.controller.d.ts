@@ -6,5 +6,6 @@ export default function UnitController(): {
     getUnitById: (req: AuthRequest, res: Response) => Promise<Response<any, Record<string, any>>>;
     updateUnit: (req: AuthRequest, res: Response) => Promise<Response<any, Record<string, any>>>;
     deleteUnit: (req: AuthRequest, res: Response) => Promise<Response<any, Record<string, any>>>;
+    bulkCreateUnits: (req: AuthRequest, res: Response) => Promise<Response<any, Record<string, any>>>;
 };
 //# sourceMappingURL=unit.controller.d.ts.map
