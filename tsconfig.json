@@ -9,8 +9,7 @@
     "declarationMap": true,
     "strict": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
-    "types": ["node"]
+    "esModuleInterop": true
   },
   "include": ["src/**/*", "generated/**/*", "prisma.config.ts", "prisma7.config.ts", "api/**/*"],
   "exclude": ["node_modules", "dist"]
