@@ -336,6 +336,11 @@ export default function UnitController() {
         MC: 'MOBILE_CRANE',
         AMBULANCE: 'AMBULANCE',
         AMBULAN: 'AMBULANCE',
+        DUMP_TRUCK: 'DUMP_TRUCK',
+        DUMPTRUCK: 'DUMP_TRUCK',
+        DT: 'DUMP_TRUCK',
+        TRUCK_DUMP: 'DUMP_TRUCK',
+        DUMP: 'DUMP_TRUCK',
       };
 
       const seenInBatch = new Set<string>();
@@ -389,7 +394,7 @@ export default function UnitController() {
           errors.push({
             row: rowNumber,
             unitNo: unitNoRaw,
-            reason: `Kategori "${item.category || '-'}" tidak valid. Pilihan: LIGHT_VECHICLE, TELEHENDLER, STORING_TRUCK, FUEL_TRUCK, GENSET, COMPRESSOR, EXCAVATOR, DOZER, COMPACTOR, CRANE_TRUCK, MOBILE_CRANE, AMBULANCE.`,
+            reason: `Kategori "${item.category || '-'}" tidak valid. Pilihan: LIGHT_VECHICLE, TELEHENDLER, STORING_TRUCK, FUEL_TRUCK, GENSET, COMPRESSOR, EXCAVATOR, DOZER, COMPACTOR, CRANE_TRUCK, MOBILE_CRANE, AMBULANCE, DUMP_TRUCK.`,
           });
           continue;
         }

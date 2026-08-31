@@ -29,6 +29,7 @@ enum SupportVehicleCategory {
   DOZER
   EXCAVATOR
   GENSET
+  DUMP_TRUCK
 }
 
 enum Posision {

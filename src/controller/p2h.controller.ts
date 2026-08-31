@@ -11,6 +11,7 @@ export const CATEGORY_P2H_TOKENS: { [category: string]: string } = {
   FUEL_TRUCK: process.env.P2H_TOKEN_FT || '#BATARAFT2026',
   GENSET: process.env.P2H_TOKEN_GS || '#BATARAGS2026',
   COMPRESSOR: process.env.P2H_TOKEN_CP || '#BATARACP2026',
+  DUMP_TRUCK: process.env.P2H_TOKEN_DT || '#BATARADT2026',
 };
 
 /**
@@ -26,6 +27,7 @@ function generateP2HNo(category: string): string {
   else if (category === 'FUEL_TRUCK') prefix = 'FT';
   else if (category === 'GENSET') prefix = 'GS';
   else if (category === 'COMPRESSOR') prefix = 'CP';
+  else if (category === 'DUMP_TRUCK') prefix = 'DT';
   else prefix = category.substring(0, 3).toUpperCase();
   return `P2H-${prefix}-${dateStr}-${randomSuffix}`;
 }

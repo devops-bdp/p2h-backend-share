@@ -399,6 +399,7 @@ export async function getDefectStats(_req: AuthRequest, res: Response) {
       FUEL_TRUCK: 0,
       GENSET: 0,
       COMPRESSOR: 0,
+      DUMP_TRUCK: 0,
     };
 
     for (const insp of inspections) {
